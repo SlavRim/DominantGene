@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+	<DominantGene.label>Доминантность</DominantGene.label>
+	<DominantGene.description>Гены зародышевой линии человека, несущего этот ген, проявляют особенно настойчивую экспрессию и передают ксенотип ребенку.</DominantGene.description>
+</LanguageData>

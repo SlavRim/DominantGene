@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<DominantGene.DominantGeneDef>
+		<displayCategory>Miscellaneous</displayCategory>
+		
+		<label>Dominant Genes</label>
+		<description>The germline genes of the person carrying this gene are particularly assertive in expression, and will enforce the xenotype onto the child.</description>
+		<iconPath>UI/Icons/Genes/Gene_Tough</iconPath>
+		<displayOrderInCategory>1</displayOrderInCategory>
+		<biostatCpx>1</biostatCpx>
+		<biostatMet>0</biostatMet>
+	</DominantGene.DominantGeneDef>
+	
+</Defs>
