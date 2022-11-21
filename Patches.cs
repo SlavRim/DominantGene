@@ -15,6 +15,7 @@ public static class Patches
         InheritGenes inherit = null;
         if (CanInheritParentDominantGenes(father, ref inherit) & CanInheritParentDominantGenes(mother, ref inherit))
             return;
+        if (inherit is null) return;
         __result.Clear();
         inherit?.Invoke(__result);
     }
@@ -27,6 +28,7 @@ public static class Patches
         InheritXenotype inherit = null;
         if (CanInheritParentDominantXenotype(mother, ref inherit) & CanInheritParentDominantXenotype(father, ref inherit))
             return;
+        if (inherit is null) return;
         inherit?.Invoke(ref xenotype);
         __result = true;
     }
