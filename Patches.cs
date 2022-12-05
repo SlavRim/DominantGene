@@ -7,21 +7,23 @@ public static class Patches
 {
     static Patches() { Mod.TryPerformPatches(); }
 
-    [HarmonyPatch(typeof(PregnancyUtility), nameof(GetInheritedGenes),
-        typeof(Pawn), typeof(Pawn)),
-    HarmonyPostfix]
-    public static void GetInheritedGenes(ref List<GeneDef> __result, Pawn father, Pawn mother)
+    [HarmonyPatch]
+    public static class GetInheritedGenes
     {
-        InheritGenes inherit = null;
-        if (CanInheritParentDominantGenes(father, ref inherit) & CanInheritParentDominantGenes(mother, ref inherit))
-            return;
-        if (inherit is null) return;
-        __result.Clear();
-        inherit?.Invoke(__result);
+        public static MethodBase TargetMethod() => typeof(PregnancyUtility).GetMethods().Where(x => x.Name == nameof(GetInheritedGenes)).MaxBy(x => x.GetParameters().Length);
+        public static void Postfix(ref List<GeneDef> __result, Pawn father, Pawn mother)
+        {
+            InheritGenes inherit = null;
+            if (CanInheritParentDominantGenes(father, ref inherit) & CanInheritParentDominantGenes(mother, ref inherit))
+                return;
+            if (inherit is null) return;
+            __result.Clear();
+            inherit?.Invoke(__result);
+        }
     }
 
-    [HarmonyPatch(typeof(PregnancyUtility), nameof(TryGetInheritedXenotype)),
-    HarmonyPostfix]
+    [HarmonyPatch(typeof(PregnancyUtility), nameof(TryGetInheritedXenotype))]
+    [HarmonyPostfix]
     public static void TryGetInheritedXenotype(ref bool __result, Pawn mother, Pawn father, ref XenotypeDef xenotype)
     {
         dominantParent = null;
@@ -33,8 +35,8 @@ public static class Patches
         __result = true;
     }
 
-    [HarmonyPatch(typeof(Pawn_GeneTracker), nameof(SetXenotypeDirect)),
-    HarmonyPostfix]
+    [HarmonyPatch(typeof(Pawn_GeneTracker), nameof(SetXenotypeDirect))]
+    [HarmonyPostfix]
     public static void SetXenotypeDirect(Pawn_GeneTracker __instance, ref XenotypeDef xenotype)
     {
         if (dominantParent is null) return;
